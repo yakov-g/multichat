@@ -181,7 +181,7 @@ _sigint_handler(int signal)
         chatroom_client_remove(_fds[i].fd);
         close(_fds[i].fd);
      }
-   printf("Caught signal. Cleaning up. Good bye.\n");
+   printf("\nCaught signal. Cleaning up. Good bye.\n");
    exit(0);
 }
 
