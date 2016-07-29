@@ -10,7 +10,7 @@
 
 #include "bst_string.h"
 
-#define CONNS 400000
+#define CONNS 3000000
 
 /* Hash: client_id -> chatroom_name */
 static const char *_client_chatroom_hash[CONNS];
