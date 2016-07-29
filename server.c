@@ -21,7 +21,7 @@ static Bst_Node *_chatrooms_hash = NULL;
 /* FIXME: Array of connections together
  * with poll.Need to implement better structure. */
 static struct pollfd _fds[CONNS];
-static int _fds_num = 1, _fds_num_cur;
+static size_t _fds_num = 1, _fds_num_cur;
 static int _compress_array = 0;
 
 /* Linked list to keep clients per group */
@@ -174,7 +174,7 @@ static void
 _sigint_handler(int signal)
 {
    (void) signal;
-   int i = 0;
+   size_t i = 0;
    close(_fds[0].fd);
    for (i = 1; i < _fds_num; i++)
      {
@@ -208,7 +208,8 @@ main(int argc, char **argv)
    int nbytes;
 
    int yes = 1;        /* For setsockopt() SO_REUSEADDR */
-   int i =0, j = 0, rv;
+   size_t i =0, j = 0;
+   int rv;
 
    struct addrinfo hints, *ai, *p;
    const char *port = NULL;
