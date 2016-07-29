@@ -146,6 +146,17 @@ chatroom_client_remove(int client_id)
      }
 }
 
+static void *
+_get_in_addr(struct sockaddr *sa)
+{
+   if (sa->sa_family == AF_INET)
+     {
+        return &(((struct sockaddr_in*)sa)->sin_addr);
+     }
+   return &(((struct sockaddr_in6*)sa)->sin6_addr);
+}
+
+
 /* Parse message.
  * if "#name" pattern is found, use it as "name" chatroom. */
 static char *
@@ -211,6 +222,7 @@ main(int argc, char **argv)
    size_t i =0, j = 0;
    int rv;
 
+   char remoteIP[INET6_ADDRSTRLEN];
    struct addrinfo hints, *ai, *p;
    const char *port = NULL;
 
@@ -303,7 +315,12 @@ main(int argc, char **argv)
                        _fds[_fds_num].fd = newfd;
                        _fds[_fds_num].events = POLLIN;
                        _fds_num++;
-                       printf("selectserver: new connection, socket: %d\n", newfd);
+                       printf("selectserver: new connection from %s on "
+                             "socket %d\n",
+                             inet_ntop(remoteaddr.ss_family,
+                                _get_in_addr((struct sockaddr*)&remoteaddr),
+                                remoteIP, INET6_ADDRSTRLEN),
+                             newfd);
                     }
                }
              else
