@@ -1,0 +1,25 @@
+Multiconnection server.
+Handles clients in chatrooms.
+Client can be only in one chatroom.
+
+
+Compile
+=======
+> make
+
+in case make won't work, compile manually:
+> gcc -o server server.c bst_string.c
+
+Usage
+=====
+> ./server port_number
+
+
+Client
+======
+> telnet localhost port_number
+
+Iteraction
+==========
+To open/join/switch chatroom, type: #chatroom_name
+
